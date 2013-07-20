@@ -4,9 +4,13 @@ import java.util.Calendar;
 
 public class State {
 
-	boolean rented;
-	Calendar startDate;
-	Calendar returnDate;
+	private boolean rented;
+	private Calendar startDate;
+	private Calendar returnDate;
+
+	public State(boolean b) {
+		rented = b;
+	}
 
 	public State(boolean rented, Calendar startDate, Calendar returnDate) {
 
@@ -19,7 +23,18 @@ public class State {
 			this.returnDate = null;
 
 		}
+	}
 
+	public boolean isRented() {
+		return rented;
+	}
+
+	public Calendar getStartDate() {
+		return startDate;
+	}
+
+	public Calendar getReturnDate() {
+		return returnDate;
 	}
 
 }
