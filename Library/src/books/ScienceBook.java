@@ -1,5 +1,6 @@
 package books;
 
+@SuppressWarnings("serial")
 public class ScienceBook implements Book {
 
 	private DefaultBook dBook;

@@ -1,8 +1,10 @@
 package books;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class State {
+@SuppressWarnings("serial")
+public class State implements Serializable{
 
 	private boolean rented;
 	private Calendar startDate;

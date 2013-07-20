@@ -4,7 +4,7 @@ import exceptions.NoBookTypeException;
 
 public class BookFactory {
 	
-	static Book bookCreator(String type , String title , String author, State s) throws NoBookTypeException{
+	public static Book bookCreator(String type , String title , String author, State s) throws NoBookTypeException{
 		switch(type){
 		case "Poetry":
 			return new PoetryBook(title, author, s);

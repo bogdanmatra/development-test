@@ -1,5 +1,6 @@
 package books;
 
+@SuppressWarnings("serial")
 public class DefaultBook implements Book {
 
 	private String title;

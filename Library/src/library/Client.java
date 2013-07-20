@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 
+@SuppressWarnings("serial")
 public class Client implements Serializable {
 
 	private String firstName;
