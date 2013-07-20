@@ -1,7 +1,10 @@
 package library;
 
+import java.io.Serializable;
 
-public class Client {
+
+
+public class Client implements Serializable {
 
 	private String firstName;
 	private String lastName;

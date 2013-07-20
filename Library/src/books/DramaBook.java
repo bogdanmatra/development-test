@@ -10,8 +10,9 @@ public class DramaBook implements Book {
 		dBook = new DefaultBook(title, author, s);
 
 	}
-
-	public static String getGenre() {
+	
+	@Override
+	public String getGenre() {
 		return genre;
 	}
 

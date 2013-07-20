@@ -28,4 +28,12 @@ public class DefaultBook implements Book {
 		return currentState;
 	}
 
+	@Override
+	public String getGenre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }

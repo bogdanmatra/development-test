@@ -11,7 +11,8 @@ public class PoetryBook implements Book{
 
 	}
 
-	public static String getGenre() {
+	@Override
+	public String getGenre() {
 		return genre;
 	}
 

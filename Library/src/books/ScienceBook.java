@@ -11,7 +11,8 @@ public class ScienceBook implements Book {
 
 	}
 
-	public static String getGenre() {
+	@Override
+	public String getGenre() {
 		return genre;
 	}
 
