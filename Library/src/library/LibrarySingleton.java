@@ -1,5 +1,7 @@
 package library;
 
+import gui.ClientsGUI;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,15 +29,13 @@ public class LibrarySingleton {
 
 		BufferedReader input = null;
 		try {
-			input = new BufferedReader(new FileReader(
-					"bin/library/librarians.txt"));
+			input = new BufferedReader(new FileReader("bin/library/librarians.txt"));
 			String line;
 			String[] data;
 
 			while ((line = input.readLine()) != null) {
 				data = line.split(" ");
-				librarians.add(new Librarian(data[0] + " " + data[1], data[2],
-						data[3]));
+				librarians.add(new Librarian(data[0] + " " + data[1], data[2],data[3]));
 			}
 
 		} catch (IOException e) {
@@ -68,6 +68,15 @@ public class LibrarySingleton {
 
 	public Map<Client, List<Book>> getLibraryMap() {
 		return libraryMap;
+	}
+	
+	
+	public Librarian credentialsCheck(String user,String pass) {
+
+		for(Librarian librarian: librarians){
+			if(librarian.getUser().equals(user) && librarian.getPassword().equals(pass)) return librarian;
+		}
+		return null;
 	}
 
 	public void serializeMapToFile() {
