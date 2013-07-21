@@ -12,7 +12,7 @@ public class Client implements Serializable {
 	private String phoneNumber;
 
 	public Client(String firstName, String lastName, String phoneNumber) {
-
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
