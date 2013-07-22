@@ -3,7 +3,7 @@ package library;
 import java.io.Serializable;
 
 
-
+// clients that are keys in the hashmap
 @SuppressWarnings("serial")
 public class Client implements Serializable {
 

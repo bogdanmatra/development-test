@@ -16,9 +16,10 @@ public class Main {
 	public static void main(String[] args) {
 		LibrarySingleton l = LibrarySingleton.getInstance();
 		
+		//adding some data
 		List<Book> list = new ArrayList<Book>();
 		try {
-			list.add(BookFactory.bookCreator("Drama", "Beyond", "John Doe", new State(true)));
+			list.add(BookFactory.createBook("Drama", "Beyond", "John Doe", new State(true)));
 		} catch (NoBookTypeException e) {
 			e.printStackTrace();
 		}
@@ -26,7 +27,7 @@ public class Main {
 		
 		List<Book> listInLibrary = new ArrayList<Book>();
 		try {
-			listInLibrary.add(BookFactory.bookCreator("SF", "Inception", "John Aldrige", new State(false)));
+			listInLibrary.add(BookFactory.createBook("SF", "Inception", "John Aldrige", new State(false)));
 		} catch (NoBookTypeException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +35,7 @@ public class Main {
 		l.getLibraryMap().put(l.getLibraryClient(), listInLibrary);
 		l.getLibraryMap().put(new Client("Bogdan", "Ionescu", "0751103535"), list);
 		
-
+		// starting application
 		new SignIn(l);
 		
 		

@@ -81,7 +81,7 @@ public class BooksGUI extends JFrame {
 			    notLibrary=false;  // if a book is added to the library it will not have a return date
 			}
 			//adding book to client list of books
-			bookList.add(BookFactory.bookCreator(getSelectedRB(), textField.getText(), textField_1.getText() , new State(notLibrary)));
+			bookList.add(BookFactory.createBook(getSelectedRB(), textField.getText(), textField_1.getText() , new State(notLibrary)));
 		    } catch (NoBookTypeException e) {
 			e.printStackTrace();
 		    }

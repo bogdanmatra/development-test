@@ -15,6 +15,9 @@ import java.util.Map;
 
 import books.Book;
 
+
+
+// class that has an object that hold the library map, librarians, and the library client (the library is also a client in the map)
 public class LibrarySingleton {
 
 	private static LibrarySingleton theLibrary;
@@ -27,11 +30,13 @@ public class LibrarySingleton {
 	}
 
 	private LibrarySingleton() {
-
+	    	
+	    	// adding the library as a client
 		Client booksInLibray = new Client("Library", "Ion Creanga", "0761103535");
 		libraryClient=booksInLibray;
 		libraryMap.put(booksInLibray, null);
 
+		// loading the librarians from a file
 		BufferedReader input = null;
 		try {
 			input = new BufferedReader(new FileReader("bin/library/librarians.txt"));
@@ -55,14 +60,16 @@ public class LibrarySingleton {
 		}
 
 	}
-
+	
+	
+	// test method to see the librarians
 	public void printLibrarioans() {
 		for (Librarian l : librarians) {
 			System.out.println(l.getName());
 		}
 
 	}
-
+	
 	public static LibrarySingleton getInstance() {
 		if (theLibrary == null) {
 			theLibrary = new LibrarySingleton();
@@ -70,12 +77,14 @@ public class LibrarySingleton {
 		} else
 			return theLibrary;
 	}
-
+	
+	
+	// returns the library map
 	public Map<Client, List<Book>> getLibraryMap() {
 		return libraryMap;
 	}
 	
-	
+	//method that checks if the librarian is a valid user
 	public Librarian credentialsCheck(String user,String pass) {
 
 		for(Librarian librarian: librarians){
@@ -83,7 +92,9 @@ public class LibrarySingleton {
 		}
 		return null;
 	}
-
+	
+	
+	// method serializes the map object to a specified path
 	public void serializeMapToFile(File directory) {
 
 		ObjectOutputStream output = null;
@@ -98,13 +109,14 @@ public class LibrarySingleton {
 				if (output != null)
 					output.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 	}
-
+	
+	
+	// method loads a map object from a file where it was serialized
 	@SuppressWarnings("unchecked")
 	public void deserializeMapToFile(File file) {
 		ObjectInputStream ois = null;
@@ -113,19 +125,16 @@ public class LibrarySingleton {
 			try {
 				libraryMap = (Map<Client, List<Book>>) ois.readObject();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (ois != null)
 				try {
 					ois.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
