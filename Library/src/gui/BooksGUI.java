@@ -3,6 +3,7 @@ package gui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -72,7 +73,12 @@ public class BooksGUI extends JFrame {
 	btnAddBook.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		
-				
+		// if user has no book list then add one
+		if(bookList==null){
+		    library.getLibraryMap().put(currentClient, new ArrayList<Book>());
+		    bookList=library.getLibraryMap().get(currentClient);
+		}
+		// adding a book after validating the user input		
 		if (getSelectedRB()!=null && BooksGUI.this.textField.getText()!="" && BooksGUI.this.textField_1.getText()!="" ){
 		    boolean notLibrary=true;
 		    try {
