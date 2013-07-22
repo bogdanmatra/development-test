@@ -20,12 +20,15 @@ import javax.swing.ListSelectionModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
+@SuppressWarnings("serial")
 public class ClientsGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private LibrarySingleton library;
+	private Librarian currentLibrarian;
 	private JTextField fieldFName;
 	private JTextField fieldLName;
 	private JTextField fieldPhone;
@@ -64,13 +67,26 @@ public class ClientsGUI extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if ((!fieldFName.getText().equals("")) && (!fieldLName.getText().equals("")) && (!fieldPhone.getText().equals(""))) {
+				int selectedRowIndex = table.getSelectedRow();
+				
+				if(selectedRowIndex==-1){
+					JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a row!","Warning",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				
+				String fName = (String) table.getModel().getValueAt(selectedRowIndex, 0);
+				String lName = (String) table.getModel().getValueAt(selectedRowIndex, 1);
+				String phone = (String) table.getModel().getValueAt(selectedRowIndex, 2);
+				
+				
+				
 					
 					for (Client client: library.getLibraryMap().keySet()){	
 						
-						if (client.getFirstName().equals(fieldFName.getText()) &&
-							client.getLastName().equals(fieldLName.getText()) &&
-							client.getPhoneNumber().equals(fieldPhone.getText()) ) {
+						if (client.getFirstName().equals(fName) &&
+							client.getLastName().equals(lName) &&
+							client.getPhoneNumber().equals(phone) ) {
 							library.getLibraryMap().remove(client);
 							break;	
 						}
@@ -78,10 +94,9 @@ public class ClientsGUI extends JFrame {
 					}
 					ClientsGUI.this.setModelFromClients();
 					
-				}
-				else{
-					JOptionPane.showMessageDialog(ClientsGUI.this, "Please enter data!","Warning",JOptionPane.WARNING_MESSAGE);
-				}
+				
+					
+				
 			}
 				
 				
@@ -91,6 +106,39 @@ public class ClientsGUI extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton bSee = new JButton("See Books");
+		bSee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int selectedRowIndex = table.getSelectedRow();
+				
+				if(selectedRowIndex==-1){
+					JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a row!","Warning",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				
+				String fName = (String) table.getModel().getValueAt(selectedRowIndex, 0);
+				String lName = (String) table.getModel().getValueAt(selectedRowIndex, 1);
+				String phone = (String) table.getModel().getValueAt(selectedRowIndex, 2);
+				
+				
+				
+					
+					for (Client client: library.getLibraryMap().keySet()){	
+						
+						if (client.getFirstName().equals(fName) &&
+							client.getLastName().equals(lName) &&
+							client.getPhoneNumber().equals(phone) ) {
+							new BooksGUI(library, client,currentLibrarian);
+							break;	
+						}
+						
+					}
+				ClientsGUI.this.dispose();
+				
+				
+			}
+		});
 		bSee.setBounds(308, 311, 114, 23);
 		contentPane.add(bSee);
 		
@@ -138,12 +186,37 @@ public class ClientsGUI extends JFrame {
 		lblLastName.setBounds(308, 174, 114, 14);
 		contentPane.add(lblLastName);
         library=lib;
+        currentLibrarian=signedInLib;
         
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.setModelFromClients();
         
-		
-		
+        JButton btnLoad = new JButton("Load");
+        btnLoad.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		
+        		File file=new File("savedMap.ser");
+        		if (!file.exists()){
+        			JOptionPane.showMessageDialog(ClientsGUI.this, "The was no file saved before!","Warning",JOptionPane.WARNING_MESSAGE);
+        			return;
+        		}
+        		
+        		library.deserializeMapToFile();
+        		setModelFromClients();
+        	}
+        });
+        btnLoad.setBounds(140, 337, 89, 23);
+        contentPane.add(btnLoad);
+        
+        JButton btnSave = new JButton("Save");
+        btnSave.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		library.serializeMapToFile();
+        	}
+        });
+        btnSave.setBounds(20, 337, 89, 23);
+        contentPane.add(btnSave);
+        this.setModelFromClients();
+  
 		
 				
 	}

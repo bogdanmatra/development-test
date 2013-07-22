@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,11 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import javax.xml.crypto.dsig.SignedInfo;
-
 import library.Librarian;
 import library.LibrarySingleton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
