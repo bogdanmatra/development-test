@@ -47,17 +47,20 @@ public class ClientsGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton bAdd = new JButton("Add Client");
+		// controller for adding a client
 		bAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				// verifying if user inserts data
 				if ((!fieldFName.getText().equals("")) && (!fieldLName.getText().equals("")) && (!fieldPhone.getText().equals(""))) {
-					
+					//creating a new client and adding him to the map keys
 					Client c =new Client(fieldFName.getText(), fieldLName.getText(), fieldPhone.getText());
 					library.getLibraryMap().put(c, null);
+					// refreshing table data
 					ClientsGUI.this.setModelFromClients();
 				}
 				else{
-					JOptionPane.showMessageDialog(ClientsGUI.this, "Please enter data!","Warning",JOptionPane.WARNING_MESSAGE);
+				        // shown if the user tries to input invalid data
+					JOptionPane.showMessageDialog(ClientsGUI.this, "Please enter valid data!","Warning",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -65,39 +68,32 @@ public class ClientsGUI extends JFrame {
 		contentPane.add(bAdd);
 		
 		JButton btnNewButton_1 = new JButton("Delete Client");
+		// controller for deleting a client
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int selectedRowIndex = table.getSelectedRow();
-				
 				if(selectedRowIndex==-1){
+				    	// if the user does not select a row the method will exit and shows a message
 					JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a row!","Warning",JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				
-				
+				// gets data from table
 				String fName = (String) table.getModel().getValueAt(selectedRowIndex, 0);
 				String lName = (String) table.getModel().getValueAt(selectedRowIndex, 1);
 				String phone = (String) table.getModel().getValueAt(selectedRowIndex, 2);
-				
-				
-				
-					
+	
 					for (Client client: library.getLibraryMap().keySet()){	
-						
+						// searching for the client in the map keys 
 						if (client.getFirstName().equals(fName) &&
 							client.getLastName().equals(lName) &&
 							client.getPhoneNumber().equals(phone) ) {
 							library.getLibraryMap().remove(client);
-							break;	
+							break;	 // exits if the client is found and deleted
 						}
 						
 					}
-					ClientsGUI.this.setModelFromClients();
-					
-				
-					
-				
+					ClientsGUI.this.setModelFromClients();	// refreshes table
 			}
 				
 				
@@ -107,35 +103,31 @@ public class ClientsGUI extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton bSee = new JButton("See Books");
+		// controller for seeing a client's books
 		bSee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				int selectedRowIndex = table.getSelectedRow();
-				
 				if(selectedRowIndex==-1){
 					JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a row!","Warning",JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				
-				
 				String fName = (String) table.getModel().getValueAt(selectedRowIndex, 0);
 				String lName = (String) table.getModel().getValueAt(selectedRowIndex, 1);
 				String phone = (String) table.getModel().getValueAt(selectedRowIndex, 2);
 				
-				
-				
-					
 					for (Client client: library.getLibraryMap().keySet()){	
-						
+						// finding the client in the map keys
 						if (client.getFirstName().equals(fName) &&
 							client.getLastName().equals(lName) &&
 							client.getPhoneNumber().equals(phone) ) {
 							new BooksGUI(library, client,currentLibrarian);
-							break;	
+							break;	// client found and the window with his books opens
 						}
 						
 					}
-				ClientsGUI.this.dispose();
+				ClientsGUI.this.dispose(); // deleting the clients window
 				
 				
 			}
@@ -154,8 +146,6 @@ public class ClientsGUI extends JFrame {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
-		
 		
 		this.setResizable(false);
 		this.setVisible(true);
@@ -186,12 +176,14 @@ public class ClientsGUI extends JFrame {
 		JLabel lblLastName = new JLabel("Phone Number:");
 		lblLastName.setBounds(308, 174, 114, 14);
 		contentPane.add(lblLastName);
-        library=lib;
-        currentLibrarian=signedInLib;
+		
+		library=lib;
+		currentLibrarian=signedInLib;
         
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         JButton btnLoad = new JButton("Load");
+        // controller for loading a file
         btnLoad.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		
@@ -199,26 +191,28 @@ public class ClientsGUI extends JFrame {
         	    	chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         	    	chooser.showOpenDialog(ClientsGUI.this);
         	    	File file =chooser.getSelectedFile();
+        	    	// checking if a file was chosen and if it has a '.ser' extention
         		if ( file==null || (checkExtention(file, "ser")==false) ){
         			JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a '.ser' file!","Warning",JOptionPane.WARNING_MESSAGE);
         			return;
         		}
         		
         		library.deserializeMapToFile(file);
-        		setModelFromClients();
+        		setModelFromClients(); // refreshing table data
         	}
         });
         btnLoad.setBounds(140, 337, 89, 23);
         contentPane.add(btnLoad);
         
         JButton btnSave = new JButton("Save");
+        //controller for saving a file
         btnSave.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        	    	
         	    	JFileChooser chooser = new JFileChooser();
         	    	chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         	    	chooser.showSaveDialog(ClientsGUI.this);
         	    	File file =chooser.getSelectedFile();
+        	    	// checking if a directory has been selected
         	    	if(file==null){
         	    	JOptionPane.showMessageDialog(ClientsGUI.this, "Please select directory!","Warning",JOptionPane.WARNING_MESSAGE);
         	    	return;
@@ -235,7 +229,7 @@ public class ClientsGUI extends JFrame {
 				
 	}
 	
-	
+	// method sets table model from the set of clients
 	private void setModelFromClients() {
 
 		DefaultTableModel tableModel=new DefaultTableModel(){
@@ -244,11 +238,13 @@ public class ClientsGUI extends JFrame {
 				return false;
 			}
 		};
+		//adding columns
 		tableModel.addColumn("First Name");
 		tableModel.addColumn("Last Name");
 		tableModel.addColumn("Phone Number");
 		
-		for (Client client: library.getLibraryMap().keySet()){	
+		for (Client client: library.getLibraryMap().keySet()){
+		    	// adding data to the table from the set
 			String[] row={ client.getFirstName(), client.getLastName(), client.getPhoneNumber() };
 			tableModel.addRow(row);
 		}
@@ -259,6 +255,8 @@ public class ClientsGUI extends JFrame {
 	}
 	
 	
+	
+	// method for checking an extention for a file
 	 private static boolean checkExtention(File file, String extention) {
 		    String[] splitted =file.getName().split("\\.");
 		    if (extention.equals(splitted[splitted.length-1])) return true;
