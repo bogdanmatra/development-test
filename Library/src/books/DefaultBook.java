@@ -1,5 +1,8 @@
 package books;
 
+
+//  the default book that is used as a field for specific books
+
 @SuppressWarnings("serial")
 public class DefaultBook implements Book {
 
@@ -31,7 +34,6 @@ public class DefaultBook implements Book {
 
 	@Override
 	public String getGenre() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

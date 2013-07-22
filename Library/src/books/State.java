@@ -12,20 +12,13 @@ public class State implements Serializable{
 
 	public State(boolean b) {
 		rented = b;
-	}
-
-	public State(boolean rented, Calendar startDate, Calendar returnDate) {
-
-		this.rented = rented;
-		if (rented == true) {
-			this.startDate = startDate;
-			this.returnDate = returnDate;
-		} else {
-			this.startDate = null;
-			this.returnDate = null;
-
+		if(rented==true){
+		startDate=Calendar.getInstance();
+		returnDate=Calendar.getInstance();
+		returnDate.add(Calendar.MONTH,1);
 		}
 	}
+
 
 	public boolean isRented() {
 		return rented;

@@ -12,6 +12,7 @@ import library.Client;
 import library.Librarian;
 import library.LibrarySingleton;
 
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -194,13 +195,16 @@ public class ClientsGUI extends JFrame {
         btnLoad.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		
-        		File file=new File("savedMap.ser");
-        		if (!file.exists()){
-        			JOptionPane.showMessageDialog(ClientsGUI.this, "The was no file saved before!","Warning",JOptionPane.WARNING_MESSAGE);
+        	    	JFileChooser chooser = new JFileChooser();
+        	    	chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        	    	chooser.showOpenDialog(ClientsGUI.this);
+        	    	File file =chooser.getSelectedFile();
+        		if ( file==null || (checkExtention(file, "ser")==false) ){
+        			JOptionPane.showMessageDialog(ClientsGUI.this, "Please select a '.ser' file!","Warning",JOptionPane.WARNING_MESSAGE);
         			return;
         		}
         		
-        		library.deserializeMapToFile();
+        		library.deserializeMapToFile(file);
         		setModelFromClients();
         	}
         });
@@ -210,7 +214,17 @@ public class ClientsGUI extends JFrame {
         JButton btnSave = new JButton("Save");
         btnSave.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		library.serializeMapToFile();
+        	    	
+        	    	JFileChooser chooser = new JFileChooser();
+        	    	chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        	    	chooser.showSaveDialog(ClientsGUI.this);
+        	    	File file =chooser.getSelectedFile();
+        	    	if(file==null){
+        	    	JOptionPane.showMessageDialog(ClientsGUI.this, "Please select directory!","Warning",JOptionPane.WARNING_MESSAGE);
+        	    	return;
+        	    	}
+        	    
+        		library.serializeMapToFile(file);
         	}
         });
         btnSave.setBounds(20, 337, 89, 23);
@@ -243,5 +257,12 @@ public class ClientsGUI extends JFrame {
 		
 
 	}
+	
+	
+	 private static boolean checkExtention(File file, String extention) {
+		    String[] splitted =file.getName().split("\\.");
+		    if (extention.equals(splitted[splitted.length-1])) return true;
+		    else return false;
+		}
 
 }

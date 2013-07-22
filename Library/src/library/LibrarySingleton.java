@@ -1,6 +1,7 @@
 package library;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -19,10 +20,16 @@ public class LibrarySingleton {
 	private static LibrarySingleton theLibrary;
 	private Map<Client, List<Book>> libraryMap = new HashMap<Client, List<Book>>();
 	private List<Librarian> librarians = new ArrayList<Librarian>();
+	private Client libraryClient;
+
+	public Client getLibraryClient() {
+		return libraryClient;
+	}
 
 	private LibrarySingleton() {
 
 		Client booksInLibray = new Client("Library", "Ion Creanga", "0761103535");
+		libraryClient=booksInLibray;
 		libraryMap.put(booksInLibray, null);
 
 		BufferedReader input = null;
@@ -77,11 +84,11 @@ public class LibrarySingleton {
 		return null;
 	}
 
-	public void serializeMapToFile() {
+	public void serializeMapToFile(File directory) {
 
 		ObjectOutputStream output = null;
 		try {
-			FileOutputStream file = new FileOutputStream("savedMap.ser");
+			FileOutputStream file = new FileOutputStream((directory.getPath() + "\\savedMap.ser"));
 			output = new ObjectOutputStream(file);
 			output.writeObject(libraryMap);
 		} catch (IOException ex) {
@@ -99,10 +106,10 @@ public class LibrarySingleton {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void deserializeMapToFile() {
+	public void deserializeMapToFile(File file) {
 		ObjectInputStream ois = null;
 		try {
-			ois = new ObjectInputStream(new FileInputStream("savedMap.ser"));
+			ois = new ObjectInputStream(new FileInputStream(file));
 			try {
 				libraryMap = (Map<Client, List<Book>>) ois.readObject();
 			} catch (ClassNotFoundException e) {

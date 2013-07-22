@@ -2,6 +2,8 @@ package books;
 
 import exceptions.NoBookTypeException;
 
+
+//creates a specific book
 public class BookFactory {
 	
 	public static Book bookCreator(String type , String title , String author, State s) throws NoBookTypeException{
