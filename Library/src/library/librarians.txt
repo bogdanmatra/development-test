@@ -1,4 +1,0 @@
-Popescu Ion ionpop ionpass
-Georgescu Dan dangeo danpass
-Cristescu Ana anacri anapass
-Moise Bogdan bogdanmoi bogdanpass
